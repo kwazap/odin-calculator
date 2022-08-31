@@ -46,4 +46,17 @@ body{
     border-style: solid;
     width: 520px;
     height: 500px;
+    display: inline-block;
+}
+
+
+.buttons button{
+    height: 72px;
+    width: 92px;
+    margin: 4px;
+    font-size: 32px;
+}
+
+#delete {
+    width: 196px;
 }
