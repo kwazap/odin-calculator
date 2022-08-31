@@ -15,19 +15,23 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-style:groove;
+    border-color: #060e18;
 }
 
 .display{
     background-color: white;
-    width: 520px;
+    width: 500px;
     height: 160px;
     margin: 60px;
     display: flex;
     flex-direction: column;
+    border-style: solid;
+    border-color: #060e18;
 }
 
 .history{
-    border-style: solid;
+    border-style: none;
     width: 320px;
     height: 40px;
     margin: 8px;
@@ -35,15 +39,15 @@ body{
 }
 
 .output{
-    border-style: solid;
-    width: 500px;
+    border-style: none;
+    width: 480px;
     height: 60px;
     margin: 8px;
     align-self: flex-end;
 }
 
 .buttons{
-    border-style: solid;
+    border-style: none;
     width: 520px;
     height: 500px;
     display: inline-block;
@@ -59,6 +63,7 @@ button{
     border-color: #0E2038;
     background-color: #2b5183;
     border-width: 3px;
+    border-radius: 4px;
 }
 
 #delete {
