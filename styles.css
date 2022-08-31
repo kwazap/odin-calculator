@@ -50,13 +50,39 @@ body{
 }
 
 
-.buttons button{
+button{
     height: 72px;
     width: 92px;
     margin: 4px;
     font-size: 32px;
+    color: lightgray;
+    border-color: #0E2038;
+    background-color: #2b5183;
+    border-width: 3px;
 }
 
 #delete {
     width: 196px;
+}
+
+#sign,
+#decimal,
+.number {
+    color:#0E2038;
+    background-color: rgb(179, 179, 179);
+}
+
+#inv{
+    background-color: rgb(70, 0, 0);
+    color: lightgray;
+    box-shadow: none;
+    outline: none;
+}
+
+#div,
+#multiply,
+#subtract,
+#add,
+#equal {
+    background-color: rgb(0, 153, 255);
 }
