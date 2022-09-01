@@ -37,13 +37,21 @@ function singleOperandSwitch(operation) {
             backspace();
             break;
         case 'sign':
-            switchSign(operation);
+            switchSign(selectCurrentOperand(),selectCurrentOperandString());
             break;
     
         default:
             break;
     }
     setOperand(Number(output.textContent));
+}
+
+function selectCurrentOperand() {
+    return operandState ? operandTwo : operandOne;
+}
+
+function selectCurrentOperandString() {
+    return operandState ? operandTwoString : operandOneString;
 }
 
 
@@ -54,7 +62,7 @@ function updateOutput(x) {
         output.textContent = output.textContent + x;
     }
     setOperand(Number(output.textContent));
-    updateHistory();
+    updateHistory('numberUpdate');
 }
 
 function inputNumber(x) {
@@ -76,7 +84,7 @@ function inputOperation(operation) {
     } else {
         output.textContent = operandTwo;
     }
-    updateHistory();
+    updateHistory('operationUpdate');
     inputState = 1;
 }
 
@@ -109,13 +117,30 @@ function operate() {
     inputState = 0;
 }
 
-function updateHistory() {    
+
+let operandOneString = operandOne;
+let operandTwoString;
+let operationString;
+function updateHistory(id, operant, operandString) {
+    switch (id) {
+        case 'numberUpdate':
+            operandState ? (operandTwoString = operandTwo) : (operandOneString = operandOne);
+            break;
+        case 'operationUpdate':
+            break;   
+        default:
+            operandState ? (operandTwoString = operandString) : (operandOneString = operandString);
+            operandState ? (operandTwo = operant) : (operandOne = operant);
+            break;
+    }    
+    
     if (currentOperation !== '') {
-        history.textContent = `${operandOne} ${currentOperation}`;
+        history.textContent = `${operandOneString} ${currentOperation}`;
     }
     if (!(operandTwo === undefined)) {
-        history.textContent = `${operandOne} ${currentOperation} ${operandTwo}`;
+        history.textContent = `${operandOneString} ${currentOperation} ${operandTwoString}`;
     }
+
 }
 
 function clear() {
@@ -138,10 +163,14 @@ function backspace() {
     };
 }
 
-function switchSign() {
-    output.textContent = Number(output.textContent) * (-1);
+function switchSign(operand, operandString) {
+    output.textContent = Number(output.textContent) * (-1);        
+    if (operand > 0) {
+        operandString = `-${operand}`;
+    } else {
+        operandString = `-(${operand})`;
+    }
+    updateHistory('', operand, operandString);
 }
 
-function updateHistoryOperand() {
-    historyOperands = history.textContent.split(' ')
-}
+
