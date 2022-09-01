@@ -28,6 +28,20 @@ body{
     flex-direction: column;
     border-style: solid;
     border-color: #060e18;
+    background-color: rgb(102, 131, 102);
+}
+
+@font-face {
+    font-family: 'digital-7';
+    src: url(digital-7.ttf);
+}
+
+
+.history,
+.output{
+    font-family: 'digital-7';
+    text-align: right;
+    align-self: flex-end;
 }
 
 .history{
@@ -35,9 +49,8 @@ body{
     width: 320px;
     height: 40px;
     line-height: 40px;
-    margin: 8px;
-    font-size: 24px;
-    align-self: flex-end;
+    margin: 8px 32px 8px 8px;
+    font-size: 32px;
 }
 
 .output{
@@ -46,9 +59,7 @@ body{
     height: 60px;
     line-height: 60px;
     margin: 8px;
-    align-self: flex-end;
-    text-align: right;
-    font-size: 40px;
+    font-size: 48px;
 }
 
 .buttons{
