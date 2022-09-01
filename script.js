@@ -1,8 +1,11 @@
 Array.from(document.querySelectorAll('button')).forEach(button => button.addEventListener('click', switchFunction));
-output = document.querySelector('.output');
+let output = document.querySelector('.output');
+let history = document.querySelector('.history')
+history.textContent = '';
 let operandState = 0;
 let operandOne = 0;
 let operandTwo = 0;
+let inputState = 1;
 let currentOperation = '';
 
 function switchFunction(e) {
@@ -30,6 +33,7 @@ function inputNumber(x) {
         output.textContent = output.textContent + x;
     }
     setOperand(Number(output.textContent));
+    updateHistory();
 }
 
 function setOperand(x) {
@@ -39,7 +43,12 @@ function setOperand(x) {
 function inputOperation(operation) {
     operandState = 1;
     currentOperation = operation;
-    output.textContent = 0;
+    if (!operandTwo) {
+        output.textContent = 0;
+    } else {
+        output.textContent = operandTwo;
+    }
+    updateHistory();
 }
 
 function operate() {
@@ -63,5 +72,34 @@ function operate() {
     operandState = 0;
     currentOperation = '';
     output.textContent = 0;
+    inputState = 0;
+    operandTwo = 0;
+    history.textContent += ' =';
     inputNumber(result);
+}
+
+function updateHistory() {
+    let sign;
+    switch (currentOperation) {
+        case 'add':
+            sign = '+ ';
+            break;
+        case 'subtract':
+            sign = '- ';
+            break;
+        case 'div':
+            sign = '/ ';
+            break;
+        case 'multiply':
+            sign = '* ';
+            break;
+        default:
+            break;
+    }
+    if (currentOperation !== '') {
+        history.textContent = `${operandOne} ${sign}`;
+    }
+    if (operandTwo) {
+        history.textContent = `${operandOne} ${sign} ${operandTwo}`;
+    }
 }
