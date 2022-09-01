@@ -1,6 +1,6 @@
 Array.from(document.querySelectorAll('button')).forEach(button => button.addEventListener('click', switchFunction));
 let output = document.querySelector('.output');
-let history = document.querySelector('.history')
+let history = document.querySelector('.history');
 history.textContent = '';
 let operandState = 0;
 let operandOne = 0;
@@ -22,6 +22,9 @@ function switchFunction(e) {
             break;
         case 'clear':
             clear();
+            break;
+        case 'backspace':
+            backspace();
             break;
         default:
             break;
@@ -117,7 +120,7 @@ function updateHistory() {
 }
 
 function clear() {
-    console.log("CLEEEEEEEEEAR")
+    console.log("CLEEEEEEEEEAR");
     operandOne = 0;
     operandTwo = 0;
     output.textContent = 0;
@@ -125,4 +128,10 @@ function clear() {
     currentOperation = '';
     operandState = 0;
     inputState = 1;
+}
+
+function backspace() {
+    if (!inputState) return;
+    output.textContent = output.textContent.slice(0, -1);
+    setOperand(Number(output.textContent));
 }

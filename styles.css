@@ -39,7 +39,7 @@ body{
 
 .history,
 .output{
-    font-family: 'digital-7';
+    font-family: 'digital-7', 'helvetica';
     text-align: right;
     align-self: flex-end;
 }
