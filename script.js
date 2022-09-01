@@ -39,6 +39,9 @@ function singleOperandSwitch(operation) {
         case 'sign':
             switchSign(selectCurrentOperand(),selectCurrentOperandString());
             break;
+        case 'rec':
+            reciprocate(selectCurrentOperand(), selectCurrentOperandString());
+            break;
     
         default:
             break;
@@ -170,6 +173,12 @@ function switchSign(operand, operandString) {
     } else {
         operandString = `-(${operand})`;
     }
+    updateHistory('', operand, operandString);
+}
+
+function reciprocate(operand, operandString) {
+    output.textContent = 1 / Number(output.textContent);
+    operandString = `rec(${operand})`;
     updateHistory('', operand, operandString);
 }
 
