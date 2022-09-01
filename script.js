@@ -41,15 +41,9 @@ function updateOutput(x) {
 
 function inputNumber(x) {
     if (!inputState) {
-        clear()
+        clear();
     }
-    if (output.textContent === '0') {
-        output.textContent = x;
-    } else {
-        output.textContent = output.textContent + x;
-    }
-    setOperand(Number(output.textContent));
-    updateHistory();
+    updateOutput(x);
 }
 
 function setOperand(x) {
