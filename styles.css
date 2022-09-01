@@ -100,10 +100,10 @@ button{
     outline: none;
 }
 
-#div,
-#multiply,
-#subtract,
-#add,
+#\/,
+#\*,
+#\-,
+#\+,
 #equal {
     background-color: rgb(0, 153, 255);
 }

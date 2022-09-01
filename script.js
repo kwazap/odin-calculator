@@ -4,7 +4,7 @@ let history = document.querySelector('.history');
 history.textContent = '';
 let operandState = 0;
 let operandOne = 0;
-let operandTwo = 0;
+let operandTwo = undefined;
 let inputState = 1;
 let currentOperation = '';
 
@@ -23,12 +23,27 @@ function switchFunction(e) {
         case 'clear':
             clear();
             break;
-        case 'backspace':
-            backspace();
+        case 'single-operand':
+            singleOperandSwitch(this.id);
             break;
         default:
             break;
     }
+}
+
+function singleOperandSwitch(operation) {
+    switch (operation) {
+        case 'delete':
+            backspace();
+            break;
+        case 'sign':
+            switchSign(operation);
+            break;
+    
+        default:
+            break;
+    }
+    setOperand(Number(output.textContent));
 }
 
 
@@ -67,17 +82,18 @@ function inputOperation(operation) {
 
 function operate() {
     let result = 0;
+    if (!inputState) return;
     switch (currentOperation) {
-        case 'add':
+        case '+':
             result = operandOne + operandTwo;          
             break;
-        case 'subtract':
+        case '-':
             result = operandOne - operandTwo;
             break;
-        case 'div':
+        case '/':
             result = operandOne / operandTwo;
             break;
-        case 'multiply':
+        case '*':
             result = operandOne * operandTwo;
             break;    
         default:
@@ -87,42 +103,25 @@ function operate() {
     currentOperation = '';
     output.textContent = 0;
     inputState = 0;
-    operandTwo = 0;
+    operandTwo = undefined;
     history.textContent += ' =';
     updateOutput(result);
     inputState = 0;
 }
 
-function updateHistory() {
-    let sign;
-    switch (currentOperation) {
-        case 'add':
-            sign = '+ ';
-            break;
-        case 'subtract':
-            sign = '- ';
-            break;
-        case 'div':
-            sign = '/ ';
-            break;
-        case 'multiply':
-            sign = '* ';
-            break;
-        default:
-            break;
-    }
+function updateHistory() {    
     if (currentOperation !== '') {
-        history.textContent = `${operandOne} ${sign}`;
+        history.textContent = `${operandOne} ${currentOperation}`;
     }
-    if (operandTwo) {
-        history.textContent = `${operandOne} ${sign} ${operandTwo}`;
+    if (!(operandTwo === undefined)) {
+        history.textContent = `${operandOne} ${currentOperation} ${operandTwo}`;
     }
 }
 
 function clear() {
     console.log("CLEEEEEEEEEAR");
     operandOne = 0;
-    operandTwo = 0;
+    operandTwo = undefined;
     output.textContent = 0;
     history.textContent = '';
     currentOperation = '';
@@ -132,6 +131,17 @@ function clear() {
 
 function backspace() {
     if (!inputState) return;
-    output.textContent = output.textContent.slice(0, -1);
-    setOperand(Number(output.textContent));
+    if (output.textContent.length <= 1) {
+        output.textContent = 0;
+    } else {
+        output.textContent = output.textContent.slice(0, -1);
+    };
+}
+
+function switchSign() {
+    output.textContent = Number(output.textContent) * (-1);
+}
+
+function updateHistoryOperand() {
+    historyOperands = history.textContent.split(' ')
 }
