@@ -28,9 +28,21 @@ function switchFunction(e) {
     }
 }
 
-function inputNumber(x) {
-    if (!inputState) return;
 
+function updateOutput(x) {
+    if (output.textContent === '0') {
+        output.textContent = x;
+    } else {
+        output.textContent = output.textContent + x;
+    }
+    setOperand(Number(output.textContent));
+    updateHistory();
+}
+
+function inputNumber(x) {
+    if (!inputState) {
+        clear()
+    }
     if (output.textContent === '0') {
         output.textContent = x;
     } else {
@@ -53,6 +65,7 @@ function inputOperation(operation) {
         output.textContent = operandTwo;
     }
     updateHistory();
+    inputState = 1;
 }
 
 function operate() {
@@ -79,7 +92,7 @@ function operate() {
     inputState = 0;
     operandTwo = 0;
     history.textContent += ' =';
-    inputNumber(result);
+    updateOutput(result);
     inputState = 0;
 }
 
@@ -110,7 +123,7 @@ function updateHistory() {
 }
 
 function clear() {
-    console.log('dasdasd')
+    console.log("CLEEEEEEEEEAR")
     operandOne = 0;
     operandTwo = 0;
     output.textContent = 0;
