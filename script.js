@@ -94,6 +94,11 @@ function inputOperation(operation) {
 function operate() {
     let result = 0;
     if (!inputState) return;
+    if (!currentOperation) {
+        equateOnSingleOperand(operandOne);
+        return;
+    };
+    if (operandTwo === undefined) { inputNumber('0'); }
     switch (currentOperation) {
         case '+':
             result = operandOne + operandTwo;          
@@ -130,13 +135,16 @@ function updateHistory(id, operant, operandString) {
             operandState ? (operandTwoString = operandTwo) : (operandOneString = operandOne);
             break;
         case 'operationUpdate':
-            break;   
+            break;
+        case '=':
+            console.log('dsadasdsadadadasd')
+            history.textContent = `${operandOneString} =`;
         default:
             operandState ? (operandTwoString = operandString) : (operandOneString = operandString);
             operandState ? (operandTwo = operant) : (operandOne = operant);
             break;
-    }    
-    
+    }
+
     if (currentOperation !== '') {
         history.textContent = `${operandOneString} ${currentOperation}`;
     }
@@ -180,6 +188,11 @@ function reciprocate(operand, operandString) {
     output.textContent = 1 / Number(output.textContent);
     operandString = `rec(${operand})`;
     updateHistory('', operand, operandString);
+}
+
+function equateOnSingleOperand(operand) {
+    output.textContent = operand;
+    updateHistory('=', operand, operandString = operand);
 }
 
 
