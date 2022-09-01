@@ -142,6 +142,9 @@ function updateHistory(id, operant, operandString) {
         case '=':
             console.log('dsadasdsadadadasd')
             history.textContent = `${operandOneString} =`;
+            break;
+        case 'single':
+            history.textContent = `${operandString}`;
         default:
             operandState ? (operandTwoString = operandString) : (operandOneString = operandString);
             operandState ? (operandTwo = operant) : (operandOne = operant);
@@ -184,13 +187,13 @@ function switchSign(operand, operandString) {
     } else {
         operandString = `-(${operand})`;
     }
-    updateHistory('', operand, operandString);
+    updateHistory('single', operand, operandString);
 }
 
 function reciprocate(operand, operandString) {
     output.textContent = 1 / Number(output.textContent);
     operandString = `rec(${operand})`;
-    updateHistory('', operand, operandString);
+    updateHistory('single', operand, operandString);
 }
 
 function equateOnSingleOperand(operand) {
@@ -200,7 +203,7 @@ function equateOnSingleOperand(operand) {
 
 function square(operand) {
     output.textContent = operand * operand;
-    updateHistory('', operand * operand, `${operand}²`);
+    updateHistory('single', operand * operand, `${operand}²`);
 }
 
 
