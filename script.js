@@ -42,6 +42,9 @@ function singleOperandSwitch(operation) {
         case 'rec':
             reciprocate(selectCurrentOperand(), selectCurrentOperandString());
             break;
+        case 'square':
+            square(selectCurrentOperand());
+            break;
     
         default:
             break;
@@ -193,6 +196,11 @@ function reciprocate(operand, operandString) {
 function equateOnSingleOperand(operand) {
     output.textContent = operand;
     updateHistory('=', operand, operandString = operand);
+}
+
+function square(operand) {
+    output.textContent = operand * operand;
+    updateHistory('', operand * operand, `${operand}²`);
 }
 
 
