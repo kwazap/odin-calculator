@@ -45,6 +45,9 @@ function singleOperandSwitch(operation) {
         case 'square':
             square(selectCurrentOperand());
             break;
+        case 'factorial':
+            factorial(selectCurrentOperand());
+            break;
     
         default:
             break;
@@ -204,6 +207,20 @@ function equateOnSingleOperand(operand) {
 function square(operand) {
     output.textContent = operand * operand;
     updateHistory('single', operand * operand, `${operand}²`);
+}
+
+function factorial(operand) {
+    if (operand < 0) return;
+    function calcFactorial(x) {
+        if (x < 0)
+            return;
+        else if (x == 1)
+            return 1;
+        else
+            return (x * calcFactorial(x - 1));
+    }
+    output.textContent = calcFactorial(operand);
+    updateHistory('single', operand, `!${operand}`);
 }
 
 
