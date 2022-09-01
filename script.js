@@ -20,13 +20,17 @@ function switchFunction(e) {
         case 'equal':
             operate();
             break;
-    
+        case 'clear':
+            clear();
+            break;
         default:
             break;
     }
 }
 
 function inputNumber(x) {
+    if (!inputState) return;
+
     if (output.textContent === '0') {
         output.textContent = x;
     } else {
@@ -76,6 +80,7 @@ function operate() {
     operandTwo = 0;
     history.textContent += ' =';
     inputNumber(result);
+    inputState = 0;
 }
 
 function updateHistory() {
@@ -102,4 +107,15 @@ function updateHistory() {
     if (operandTwo) {
         history.textContent = `${operandOne} ${sign} ${operandTwo}`;
     }
+}
+
+function clear() {
+    console.log('dasdasd')
+    operandOne = 0;
+    operandTwo = 0;
+    output.textContent = 0;
+    history.textContent = '';
+    currentOperation = '';
+    operandState = 0;
+    inputState = 1;
 }
