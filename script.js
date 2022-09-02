@@ -7,6 +7,7 @@ let operandOne = 0;
 let operandTwo = undefined;
 let inputState = 1;
 let currentOperation = '';
+let invState = 0;
 
 function switchFunction(e) {
     console.log(this.className);
@@ -26,6 +27,9 @@ function switchFunction(e) {
         case 'single-operand':
             singleOperandSwitch(this.id);
             break;
+        case 'inv':
+            invertButtons();
+            break;
         default:
             break;
     }
@@ -37,16 +41,31 @@ function singleOperandSwitch(operation) {
             backspace();
             break;
         case 'sign':
-            switchSign(selectCurrentOperand(),selectCurrentOperandString());
+            switchSign(selectCurrentOperand());
             break;
         case 'rec':
-            reciprocate(selectCurrentOperand(), selectCurrentOperandString());
+            reciprocate(selectCurrentOperand());
             break;
         case 'square':
             square(selectCurrentOperand());
             break;
         case 'factorial':
             factorialize(selectCurrentOperand());
+            break;
+        case 'log':
+            findLog10(selectCurrentOperand());
+            break;
+        case 'ln':
+            findLn(selectCurrentOperand());
+            break;
+        case 'sin':
+            findSin(selectCurrentOperand());
+            break;
+        case 'cos':
+            findCos(selectCurrentOperand());
+            break;
+        case 'tan':
+            findTan(selectCurrentOperand());
             break;
     
         default:
@@ -58,11 +77,6 @@ function singleOperandSwitch(operation) {
 function selectCurrentOperand() {
     return operandState ? operandTwo : operandOne;
 }
-
-function selectCurrentOperandString() {
-    return operandState ? operandTwoString : operandOneString;
-}
-
 
 function updateOutput(x) {
     if (output.textContent === '0') {
@@ -138,7 +152,7 @@ function operate() {
 let operandOneString = operandOne;
 let operandTwoString;
 let operationString;
-function updateHistory(id, operant, operandString) {
+function updateHistory(id, operand, operandString) {
     switch (id) {
         case 'numberUpdate':
             operandState ? (operandTwoString = operandTwo) : (operandOneString = operandOne);
@@ -153,7 +167,7 @@ function updateHistory(id, operant, operandString) {
             history.textContent = `${operandString}`;
         default:
             operandState ? (operandTwoString = operandString) : (operandOneString = operandString);
-            operandState ? (operandTwo = operant) : (operandOne = operant);
+            operandState ? (operandTwo = operand) : (operandOne = operand);
             break;
     }
 
@@ -228,6 +242,37 @@ function factorialize(operand) {
     updateHistory('single', operand, `!${operand}`);
 }
 
-function findLog(params) {
-    
+function findLog10(operand) {
+    output.textContent = Math.log10(operand);
+    updateHistory('single', Math.log10(operand), `log(${operand})`);
+}
+
+function findLn(operand) {
+    output.textContent = Math.log(operand);
+    updateHistory('single', Math.log(operand), `log(${operand})`);
+}
+
+function findSin(operand) {
+    output.textContent = Math.sin(degToRad(operand))
+    updateHistory('single', Math.sin(degToRad(operand)), `sin(${operand})`)
+}
+
+function findCos(operand) {
+    r = Math.cos(degToRad(operand));
+    r = r < 1e-15 ? r = 0 : r = r;
+    output.textContent = r;
+    updateHistory('single', r, `cos(${operand})`)
+}
+
+function findTan(operand) {
+    output.textContent = Math.tan(degToRad(operand))
+    updateHistory('single', Math.tan(degToRad(operand)), `tan(${operand})`)
+}
+
+function radToDeg(rads) {
+    return rads * 180 / Math.PI;
+}
+
+function degToRad(degs) {
+    return degs / 180 * Math.PI;
 }
