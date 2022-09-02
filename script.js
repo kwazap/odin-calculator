@@ -1,4 +1,6 @@
-Array.from(document.querySelectorAll('button')).forEach(button => button.addEventListener('click', switchFunction));
+let buttons = Array.from(document.querySelectorAll('button'));
+buttons.forEach(button => button.addEventListener('click', switchFunction));
+let invertibleButtons = Array.from(document.querySelectorAll('.invertible'));
 let output = document.querySelector('.output');
 let history = document.querySelector('.history');
 history.textContent = '';
@@ -7,11 +9,11 @@ let operandOne = 0;
 let operandTwo = undefined;
 let inputState = 1;
 let currentOperation = '';
-let invState = 0;
+let invState = false;
 
 function switchFunction(e) {
-    console.log(this.className);
-    switch (this.className) {
+    console.log(this.classList[0]);
+    switch (this.classList[0]) {
         case 'number':
             inputNumber(this.id);
             break;
@@ -41,31 +43,31 @@ function singleOperandSwitch(operation) {
             backspace();
             break;
         case 'sign':
-            switchSign(selectCurrentOperand());
+            switchSign(getOperand());
             break;
         case 'rec':
-            reciprocate(selectCurrentOperand());
+            reciprocate(getOperand());
             break;
         case 'square':
-            square(selectCurrentOperand());
+            invState ? squareRoot(getOperand()) : square(getOperand());
             break;
         case 'factorial':
-            factorialize(selectCurrentOperand());
+            factorialize(getOperand());
             break;
         case 'log':
-            findLog10(selectCurrentOperand());
+            invState ? find10powerX(getOperand()) : findLog10(getOperand());
             break;
         case 'ln':
-            findLn(selectCurrentOperand());
+            invState ? exponent(getOperand()) : findLn(getOperand());
             break;
         case 'sin':
-            findSin(selectCurrentOperand());
+            invState ? findArcsin(getOperand()) : findSin(getOperand());
             break;
         case 'cos':
-            findCos(selectCurrentOperand());
+            invState ? findArccos(getOperand()) : findCos(getOperand());
             break;
         case 'tan':
-            findTan(selectCurrentOperand());
+            invState ? findArctan(getOperand()) : findTan(getOperand());
             break;
     
         default:
@@ -74,7 +76,7 @@ function singleOperandSwitch(operation) {
     setOperand(Number(output.textContent));
 }
 
-function selectCurrentOperand() {
+function getOperand() {
     return operandState ? operandTwo : operandOne;
 }
 
@@ -133,7 +135,8 @@ function operate() {
             result = operandOne * operandTwo;
             break;  
         case '^':
-            result = operandOne ** operandTwo;
+            invState ? result = operandOne ** (operandTwo = 1/operandTwo) :
+                result = operandOne ** operandTwo;
             break;
         default:
             break;
@@ -155,12 +158,13 @@ let operationString;
 function updateHistory(id, operand, operandString) {
     switch (id) {
         case 'numberUpdate':
-            operandState ? (operandTwoString = operandTwo) : (operandOneString = operandOne);
+            if (currentOperation === '^' && invState === true) {operandTwoString = `1/${operandTwo}`} else {
+                operandState ? (operandTwoString = operandTwo) : (operandOneString = operandOne);
+            }            
             break;
         case 'operationUpdate':
             break;
         case '=':
-            console.log('dsadasdsadadadasd')
             history.textContent = `${operandOneString} =`;
             break;
         case 'single':
@@ -223,9 +227,24 @@ function equateOnSingleOperand(operand) {
     updateHistory('=', operand, operandString = operand);
 }
 
+function invertButtons() {    
+    revert = ['yˣ', 'x²', 'log', 'ln', 'tan', 'cos', 'sin'];
+    invert = ['ˣ√y', '√x', '10ˣ', 'eˣ', 'atan', 'acos', 'asin']
+    invState ? applied = revert : applied = invert;
+    for (let i = 0; i < invertibleButtons.length; i++) {
+        invertibleButtons[i].textContent = applied[i];
+    }
+    invState = !invState;
+}
+
 function square(operand) {
     output.textContent = operand * operand;
     updateHistory('single', operand * operand, `${operand}²`);
+}
+
+function squareRoot(operand) {
+    output.textContent = operand ** (1 / 2);
+    updateHistory('single', operand ** (1 / 2), `√${operand}`);
 }
 
 function factorialize(operand) {
@@ -247,14 +266,30 @@ function findLog10(operand) {
     updateHistory('single', Math.log10(operand), `log(${operand})`);
 }
 
+function find10powerX(operand) {
+    output.textContent = 10 ** operand;
+    updateHistory('single', 10 ** operand, `10^(${operand})`);
+}
+
+
 function findLn(operand) {
     output.textContent = Math.log(operand);
     updateHistory('single', Math.log(operand), `log(${operand})`);
 }
 
+function exponent(operand) {
+    output.textContent = Math.E ** operand;
+    updateHistory('single', Math.E ** operand, `e^(${operand})`);
+}
+
 function findSin(operand) {
     output.textContent = Math.sin(degToRad(operand))
     updateHistory('single', Math.sin(degToRad(operand)), `sin(${operand})`)
+}
+
+function findArcsin(operand) {
+    output.textContent = radToDeg(Math.asin(operand));
+    updateHistory('single', radToDeg(Math.asin(operand)), `arcsin(${operand})`)
 }
 
 function findCos(operand) {
@@ -264,9 +299,19 @@ function findCos(operand) {
     updateHistory('single', r, `cos(${operand})`)
 }
 
+function findArccos(operand) {
+    output.textContent = radToDeg(Math.acos(operand));
+    updateHistory('single', radToDeg(Math.acos(operand)), `arccos(${operand})`)
+}
+
 function findTan(operand) {
     output.textContent = Math.tan(degToRad(operand))
     updateHistory('single', Math.tan(degToRad(operand)), `tan(${operand})`)
+}
+
+function findArctan(operand) {
+    output.textContent = radToDeg(Math.atan(operand));
+    updateHistory('single', radToDeg(Math.atan(operand)), `arctan(${operand})`)
 }
 
 function radToDeg(rads) {
