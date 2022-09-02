@@ -104,6 +104,6 @@ button{
 #\*,
 #\-,
 #\+,
-#equal {
+#\= {
     background-color: rgb(0, 153, 255);
 }

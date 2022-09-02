@@ -1,5 +1,6 @@
 let buttons = Array.from(document.querySelectorAll('button'));
-buttons.forEach(button => button.addEventListener('click', switchFunction));
+buttons.forEach(button => button.addEventListener('click', eventHandler));
+document.addEventListener('keyup', keyboardSwitch);
 let invertibleButtons = Array.from(document.querySelectorAll('.invertible'));
 let output = document.querySelector('.output');
 let history = document.querySelector('.history');
@@ -11,23 +12,45 @@ let inputState = 1;
 let currentOperation = '';
 let invState = false;
 
-function switchFunction(e) {
-    console.log(this.classList[0]);
-    switch (this.classList[0]) {
+let keybinds = {
+    c: 'clear',
+    Backspace: 'delete',
+    '!': 'factorial',
+    Enter: '=',
+    "`" : 'inv'
+    }
+
+function eventHandler(e) {
+    switchFunction(this);
+}
+
+function keyboardSwitch(e) {
+    console.log(e.key, e);
+    if (keybinds[e.key]) {
+        switchFunction(buttons.find(button => button.id === keybinds[e.key]))
+    }
+    else if (buttons.find(button => button.id === e.key)) {
+        switchFunction(buttons.find(button => button.id === e.key));
+    }    
+}
+
+function switchFunction(x) {
+    console.log(x.classList[0]);
+    switch (x.classList[0]) {
         case 'number':
-            inputNumber(this.id);
+            inputNumber(x.id);
             break;
         case 'double-operand':
-            inputOperation(this.id);
+            inputOperation(x.id);
             break;
-        case 'equal':
+        case '=':
             operate();
             break;
         case 'clear':
             clear();
             break;
         case 'single-operand':
-            singleOperandSwitch(this.id);
+            singleOperandSwitch(x.id);
             break;
         case 'inv':
             invertButtons();
@@ -40,7 +63,7 @@ function switchFunction(e) {
 function singleOperandSwitch(operation) {
     switch (operation) {
         case 'delete':
-            backspace();
+            backspace(getOperand());
             break;
         case 'sign':
             switchSign(getOperand());
@@ -106,6 +129,7 @@ function inputOperation(operation) {
     currentOperation = operation;
     if (!operandTwo) {
         output.textContent = 0;
+        operandTwo = 0;
     } else {
         output.textContent = operandTwo;
     }
@@ -163,6 +187,7 @@ function updateHistory(id, operand, operandString) {
             }            
             break;
         case 'operationUpdate':
+            operandTwoString = `${operandTwo}`;
             break;
         case '=':
             history.textContent = `${operandOneString} =`;
@@ -195,7 +220,7 @@ function clear() {
     inputState = 1;
 }
 
-function backspace() {
+function backspace(operand) {
     if (!inputState) return;
     if (output.textContent.length <= 1) {
         output.textContent = 0;
