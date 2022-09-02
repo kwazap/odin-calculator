@@ -46,7 +46,7 @@ function singleOperandSwitch(operation) {
             square(selectCurrentOperand());
             break;
         case 'factorial':
-            factorial(selectCurrentOperand());
+            factorialize(selectCurrentOperand());
             break;
     
         default:
@@ -117,7 +117,10 @@ function operate() {
             break;
         case '*':
             result = operandOne * operandTwo;
-            break;    
+            break;  
+        case '^':
+            result = operandOne ** operandTwo;
+            break;
         default:
             break;
     }
@@ -180,7 +183,9 @@ function backspace() {
         output.textContent = 0;
     } else {
         output.textContent = output.textContent.slice(0, -1);
+        operand = Number(output.textContent);
     };
+    updateHistory('single',operand,operand)
 }
 
 function switchSign(operand, operandString) {
@@ -209,7 +214,7 @@ function square(operand) {
     updateHistory('single', operand * operand, `${operand}²`);
 }
 
-function factorial(operand) {
+function factorialize(operand) {
     if (operand < 0) return;
     function calcFactorial(x) {
         if (x < 0)
@@ -223,4 +228,6 @@ function factorial(operand) {
     updateHistory('single', operand, `!${operand}`);
 }
 
-
+function findLog(params) {
+    
+}
