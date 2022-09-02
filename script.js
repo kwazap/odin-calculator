@@ -264,12 +264,12 @@ function invertButtons() {
 
 function square(operand) {
     output.textContent = operand * operand;
-    updateHistory('single', operand * operand, `${operand}²`);
+    updateHistory('single', operand * operand, `${Math.round(operand * 1e5) / 1e5}²`);
 }
 
 function squareRoot(operand) {
     output.textContent = operand ** (1 / 2);
-    updateHistory('single', operand ** (1 / 2), `√${operand}`);
+    updateHistory('single', operand ** (1 / 2), `√${Math.round(operand * 1e5) / 1e5}`);
 }
 
 function factorialize(operand) {
@@ -288,55 +288,55 @@ function factorialize(operand) {
 
 function findLog10(operand) {
     output.textContent = Math.log10(operand);
-    updateHistory('single', Math.log10(operand), `log(${operand})`);
+    updateHistory('single', Math.log10(operand), `log(${Math.round(operand * 1e5) / 1e5})`);
 }
 
 function find10powerX(operand) {
     output.textContent = 10 ** operand;
-    updateHistory('single', 10 ** operand, `10^(${operand})`);
+    updateHistory('single', 10 ** operand, `10^(${Math.round(operand * 1e5) / 1e5})`);
 }
 
 
 function findLn(operand) {
     output.textContent = Math.log(operand);
-    updateHistory('single', Math.log(operand), `log(${operand})`);
+    updateHistory('single', Math.log(operand), `log(${Math.round(operand * 1e5) / 1e5})`);
 }
 
 function exponent(operand) {
     output.textContent = Math.E ** operand;
-    updateHistory('single', Math.E ** operand, `e^(${operand})`);
+    updateHistory('single', Math.E ** operand, `e^(${Math.round(operand * 1e5) / 1e5})`);
 }
 
 function findSin(operand) {
     output.textContent = Math.sin(degToRad(operand))
-    updateHistory('single', Math.sin(degToRad(operand)), `sin(${operand})`)
+    updateHistory('single', Math.sin(degToRad(operand)), `sin(${Math.round(operand * 1e5) / 1e5})`)
 }
 
 function findArcsin(operand) {
     output.textContent = radToDeg(Math.asin(operand));
-    updateHistory('single', radToDeg(Math.asin(operand)), `arcsin(${operand})`)
+    updateHistory('single', radToDeg(Math.asin(operand)), `arcsin(${Math.round(operand * 1e5) / 1e5})`)
 }
 
 function findCos(operand) {
     r = Math.cos(degToRad(operand));
     r = r < 1e-15 ? r = 0 : r = r;
     output.textContent = r;
-    updateHistory('single', r, `cos(${operand})`)
+    updateHistory('single', r, `cos(${Math.round(operand * 1e5) / 1e5})`)
 }
 
 function findArccos(operand) {
     output.textContent = radToDeg(Math.acos(operand));
-    updateHistory('single', radToDeg(Math.acos(operand)), `arccos(${operand})`)
+    updateHistory('single', radToDeg(Math.acos(operand)), `arccos(${Math.round(operand * 1e5) / 1e5})`)
 }
 
 function findTan(operand) {
     output.textContent = Math.tan(degToRad(operand))
-    updateHistory('single', Math.tan(degToRad(operand)), `tan(${operand})`)
+    updateHistory('single', Math.tan(degToRad(operand)), `tan(${Math.round(operand * 1e5) / 1e5})`)
 }
 
 function findArctan(operand) {
     output.textContent = radToDeg(Math.atan(operand));
-    updateHistory('single', radToDeg(Math.atan(operand)), `arctan(${operand})`)
+    updateHistory('single', radToDeg(Math.atan(operand)), `arctan(${Math.round(operand * 1e5) / 1e5})`)
 }
 
 function radToDeg(rads) {
