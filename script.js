@@ -183,11 +183,11 @@ function updateHistory(id, operand, operandString) {
     switch (id) {
         case 'numberUpdate':
             if (currentOperation === '^' && invState === true) {operandTwoString = `1/${operandTwo}`} else {
-                operandState ? (operandTwoString = operandTwo) : (operandOneString = operandOne);
+                operandState ? (operandTwoString = Math.round(operandTwo * 1e5) / 1e5) : (operandOneString = Math.round(operandOne * 1e5) / 1e5);
             }            
             break;
         case 'operationUpdate':
-            operandTwoString = `${operandTwo}`;
+            operandTwoString = `${Math.round(operandTwo*1e5)/1e5}`;
             break;
         case '=':
             history.textContent = `${operandOneString} =`;
